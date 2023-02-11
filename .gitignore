@@ -105,3 +105,6 @@ dist
 
 #credentials
 credentials/*.json
+
+#state JSON file
+content.json
