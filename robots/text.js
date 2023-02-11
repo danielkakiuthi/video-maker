@@ -5,14 +5,17 @@ const watsonApiKey = require('../credentials/watson-nlu.json').apikey
 const watsonUrl = require('../credentials/watson-nlu.json').url
 const NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js')
  
-var nlu = new NaturalLanguageUnderstandingV1({
+const nlu = new NaturalLanguageUnderstandingV1({
   iam_apikey: watsonApiKey,
   version: '2018-04-05',
   url: watsonUrl
 })
 
+const state = require('./state.js')
 
-async function robot(content) {
+async function robot() {
+    
+    const content = state.load()
 
     await fetchContentFromWikipedia(content)
     sanitizeContent(content)
@@ -20,6 +23,7 @@ async function robot(content) {
     limitMaximumSentences(content)
     await fetchKeywordsOfAllSentences(content)
 
+    state.save(content)
 
     async function fetchContentFromWikipedia(content) {
         const pageContent = {}
