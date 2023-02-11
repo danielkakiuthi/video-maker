@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/danielkakiuthi/video-maker#readme",
   "dependencies": {
+    "gm": "^1.25.0",
     "googleapis": "^111.0.0",
     "image-downloader": "^4.3.0",
     "readline-sync": "^1.4.10",

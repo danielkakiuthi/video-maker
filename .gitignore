@@ -111,3 +111,4 @@ content.json
 
 #content folder (downloaded images)
 content/*.png
+content/*.jpg
