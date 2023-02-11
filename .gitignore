@@ -108,3 +108,6 @@ credentials/*.json
 
 #state JSON file
 content.json
+
+#content folder (downloaded images)
+content/*.png
