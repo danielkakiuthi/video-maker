@@ -17,11 +17,15 @@
   },
   "homepage": "https://github.com/danielkakiuthi/video-maker#readme",
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^1.4.1",
+    "fluent-ffmpeg": "^2.1.2",
     "gm": "^1.25.0",
     "googleapis": "^111.0.0",
     "image-downloader": "^4.3.0",
     "readline-sync": "^1.4.10",
     "sbd": "^1.0.19",
+    "videoshow": "^0.1.12",
     "watson-developer-cloud": "^4.0.0",
     "wikipedia": "^1.2.0"
   }
