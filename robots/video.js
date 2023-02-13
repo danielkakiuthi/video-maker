@@ -10,6 +10,7 @@ let ffmpeg = require('fluent-ffmpeg')
 ffmpeg.setFfmpegPath(ffmpegPath)
 ffmpeg.setFfprobePath(ffprobePath)
 
+
 async function robot() {
 
     const content = state.load()
