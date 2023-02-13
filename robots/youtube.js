@@ -7,6 +7,7 @@ const fs = require('fs')
 
 
 async function robot() {
+    console.log('> [youtube-robot] Starting...')
     const content = state.load()
 
     await authenticateWithOAuth()
@@ -29,7 +30,7 @@ async function robot() {
                 const app = express()
 
                 const server = app.listen(port, () => {
-                    console.log(`> [robot-youtube] Listening on http://localhost:${port}`)
+                    console.log(`> [youtube-robot] Listening on http://localhost:${port}`)
                     resolve({
                         app,
                         server
@@ -55,16 +56,16 @@ async function robot() {
                 access_type: 'offline',
                 scope: ['https://www.googleapis.com/auth/youtube']
             })
-            console.log(`> [robot-youtube] Please give your consent:\n${consentUrl}`)
+            console.log(`> [youtube-robot] Please give your consent:\n${consentUrl}`)
         }
 
         async function waitForGoogleCallback(webServer) {
             return new Promise((resolve, reject) => {
-                console.log('> [robot-youtube] Waiting for user consent...')
+                console.log('> [youtube-robot] Waiting for user consent...')
 
                 webServer.app.get('/oauth2callback', (req,res) => {
                     const authCode = req.query.code
-                    console.log(`> [robot-youtube] Consent given: ${authCode}`)
+                    console.log(`> [youtube-robot] Consent given: ${authCode}`)
                     res.send('<h1> Thank you!</h1><p>Now close this tab.</p>')
                     resolve(authCode)
                 })
@@ -77,8 +78,7 @@ async function robot() {
                     if (error) {
                         return reject(error)
                     }
-                    console.log('> [robot-youtube] Access tokens received:')
-                    console.log(tokens)
+                    console.log('> [youtube-robot] Access tokens received!')
 
                     OAuthClient.setCredentials(tokens)
                     resolve()
@@ -120,7 +120,7 @@ async function robot() {
                     tags: videoTags
                 },
                 status: {
-                    privacyStatus: 'unlisted'
+                    privacyStatus: 'private'
                 }
             },
             media: {
@@ -128,16 +128,17 @@ async function robot() {
             }
         }
 
+        console.log('> [youtube-robot] Starting to upload video to Youtube')
         const youtubeResponse = await youtube.videos.insert(requestParameters, {
             onUploadProgress: onUploadProgress
         })
 
-        console.log(`> [robot-youtube] Video available at: https://youtu.be/${youtubeResponse.data.id}`)
+        console.log(`> [youtube-robot] Video available at: https://youtu.be/${youtubeResponse.data.id}`)
         return youtubeResponse.data
 
         function onUploadProgress(event) {
             const progress = Math.round((event.bytesRead / videoFileSize) * 100)
-            console.log(`> [robot-youtube] ${progress}% completed`)
+            console.log(`> [youtube-robot] ${progress}% completed`)
         }
     }
 
@@ -155,7 +156,7 @@ async function robot() {
         }
 
         const youtubeResponse = await youtube.thumbnails.set(requestParameters)
-        console.log('> [robot-youtube] Thumbnail uploaded!')
+        console.log('> [youtube-robot] Thumbnail uploaded!')
     }
 }
 

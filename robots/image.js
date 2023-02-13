@@ -6,7 +6,7 @@ const state = require('./state.js')
 const googleSearchCredentials = require('../credentials/google-search.json')
 
 async function robot() {
-
+    console.log('> [image-robot] Starting...')
     const content = state.load()
 
     await fetchImagesOfAllSentences(content)
@@ -16,11 +16,18 @@ async function robot() {
 
 
     async function fetchImagesOfAllSentences(content) {
-        for (const sentence of content.sentences) {
-            const query = `${content.searchTerm} ${sentence.keywords[0]}`
-            sentence.images = await fetchGoogleAndReturnImagesLinks(query)
+        for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++) {
+            let query
 
-            sentence.googleSearchQuery = query
+            if (sentenceIndex == 0) {
+                query = `${content.searchTerm}`
+            } else {
+                query = `${content.searchTerm} ${content.sentences[sentenceIndex].keywords[0]}`
+            }
+
+            console.log(`> [image-robot] Querying Google Images with: ${query}`)
+            content.sentences[sentenceIndex].images = await fetchGoogleAndReturnImagesLinks(query)
+            content.sentences[sentenceIndex].googleSearchQuery = query
         }
     }
 
@@ -32,8 +39,8 @@ async function robot() {
             cx: googleSearchCredentials.searchEngineId,
             q: query,
             searchType: "image",
-            //imgSize: 'huge',
-            num: 3
+            imgSize: 'large',
+            num: 2
         })
         
         const imagesUrl = response.data.items.map((item) => {
@@ -56,14 +63,14 @@ async function robot() {
 
                 try {
                     if (content.downloadedImages.includes(imageUrl)) {
-                        throw new Error('Imagem ja foi baixada')
+                        throw new Error('Image already downloaded')
                     }
                     await downloadAndSave(imageUrl, `${sentenceIndex}-original.png`)
                     content.downloadedImages.push(imageUrl)
-                    console.log(`> [image-robot] [${sentenceIndex}][${imageIndex}] Baixou imagem com sucesso: ${imageUrl}`)
+                    console.log(`> [image-robot] [${sentenceIndex}][${imageIndex}] Image successfully downloaded: ${imageUrl}`)
                     break
                 } catch (error) {
-                    console.log(`> [image-robot] [${sentenceIndex}][${imageIndex}] Erro ao baixar ${imageUrl}: ${error}`)
+                    console.log(`> [image-robot] [${sentenceIndex}][${imageIndex}] Error ${imageUrl}: ${error}`)
                 }
             }
         }
