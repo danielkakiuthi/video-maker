@@ -12,7 +12,7 @@ ffmpeg.setFfprobePath(ffprobePath)
 
 
 async function robot() {
-
+    console.log('> [video-robot] Starting...')
     const content = state.load()
     
     await convertAllImages(content)
@@ -112,8 +112,8 @@ async function robot() {
         }
         
         gm()
-            .out('-size', templateSettings[sentenceIndex].size)
-            .out('-gravity', templateSettings[sentenceIndex].gravity)
+            .out('-size', templateSettings[sentenceIndex % 7].size)
+            .out('-gravity', templateSettings[sentenceIndex % 7].gravity)
             .out('-background', 'transparent')
             .out('-fill', 'white')
             .out('-kerning', '-1')
@@ -140,7 +140,7 @@ async function robot() {
                     return reject(error)
                 }
                 
-                console.log('> [video-robot] Creating youtube thumbnail')
+                console.log('> [video-robot] Youtube thumbnail created')
                 resolve()
             })
         })
@@ -222,7 +222,7 @@ async function robot() {
         }
 
         videoshow(images, videoOptions)
-            // .audio("song.mp3")
+            .audio("song.mp3")
             .save(destinationFilePath)
             .on('start', function(command) {
                 console.log('> [video-robot] ffmpeg process started: ', command)
