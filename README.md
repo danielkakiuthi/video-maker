@@ -6,10 +6,7 @@ Original Author: Filipe Deschamps
 [Github of the original project](https://github.com/filipedeschamps/video-maker)
 
 [Youtube Playlist of the original project](https://www.youtube.com/playlist?list=PLMdYygf53DP4YTVeu0JxVnWq01uXrLwHi)
-
-
-
-
+ 
 The main steps that this code executes are:
 1. Input
    - Ask the user for a **search term** and a **prefix**
@@ -53,7 +50,6 @@ In the **/credentials** folder, create a file `watson-nlu.json` with the generat
   "iam_serviceid_crn": "...",
   "url": "..."
 }
-
 ```
 > Ps.: At the time this project was created, there is a quota limit of 30,000 NLU Items Per Month without incurring any costs (Lite plan). 
 
