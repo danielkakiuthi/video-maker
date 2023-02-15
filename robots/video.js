@@ -222,7 +222,7 @@ async function robot() {
         }
 
         videoshow(images, videoOptions)
-            .audio("song.mp3")
+            //.audio(`${rootPath}/content/song.mp3`)
             .save(destinationFilePath)
             .on('start', function(command) {
                 console.log('> [video-robot] ffmpeg process started: ', command)
