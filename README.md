@@ -8,6 +8,8 @@ Original Author: Filipe Deschamps
 [Youtube Playlist of the original project](https://www.youtube.com/playlist?list=PLMdYygf53DP4YTVeu0JxVnWq01uXrLwHi)
 
 
+
+
 The main steps that this code executes are:
 1. Input
    - Ask the user for a **search term** and a **prefix**
@@ -26,7 +28,7 @@ The main steps that this code executes are:
    - create Youtube thumbnail
    - renderVideo (using videoshow ffmpeg)
 5. youtube-robot
-   - authenticate with OAuth
+   - authorize with OAuth
    - upload video (using Youtube API)
    - upload thumbnail
 
